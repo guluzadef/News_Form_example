@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static "news/css/main.css" %}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h1>News</h1>
+            <a href="{% url 'create' %}" class="btn btn-primary">Yeni Xeber Elave Et</a>
+            {% for i in post %}
+                <div class="list-group">
+                    <a href="{% url 'detail' i.id %}" class="list-group-item ">{{ i.title }}</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-4">
+            <h2>Cards with Contextual Classes</h2>
+            {% for i in notification %}
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url 'detail' i.id %}">
+                            <h3>{{ i.get_info }}</h3>
+                            <h5>{{ i.info.created_time }}</h5>
+                        </a>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+            <br>
+
+        </div>
+    </div>
+
+</div>
+{#<script src="{% static "news/js/min.js" %}"></script>#}
+<div id="snackbar"></div>
+{##}
+<script type="application/javascript">
+    function snackbar(text) {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        x.innerHTML = text;
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, 3000);
+    };
+    {% if messages %}
+        {% for msg in messages %}
+            snackbar("{{ msg }}");
+        {% endfor %}
+    {% endif %}
+
+</script>
+</body>
+</html>
